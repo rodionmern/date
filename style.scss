@@ -1,0 +1,28 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	height: 100dvh;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background-color: #212121;
+}
+
+#timeOut {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	color: white;
+	background-color: #323232;
+
+	border-radius: 2px;
+
+	width: 350px;
+	height: 50px;
+}
