@@ -1,0 +1,84 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--dark-theme-color: #f2ffff;
+	--dark-theme-background-color: #212124;
+	--light-theme-color: #0a0a0a;
+	--light-theme-background-color: #f2ffff;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	font-family: monospace;
+	font-weight: bolder;
+	color: var(--dark-theme-color);
+	background-color: var(--dark-theme-background-color);
+	width: 100%;
+	height: max-content;
+}
+
+a {
+	color: #c1dfdf;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+hr {
+	width: 100%;
+	margin: 25px 0;
+}
+
+.content {
+	display: flex;
+	justify-items: center;
+	align-items: center;
+	flex-direction: column;
+	border: 2px solid var(--dark-theme-color);
+	border-radius: 2px;
+	margin: 25px 0px;
+	padding: 20px;
+	width: max-content;
+}
+
+#passed_time {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 25px;
+	border-radius: 2px;
+}
+
+.commit_block {
+	width: 100%;
+}
+
+.commit-info {
+	width: 100%;
+}
+
+@media (prefers-color-scheme: light) {
+	body {
+		color: var(--light-theme-color);
+		background-color: var(--light-theme-background-color);
+	}
+	.content {
+		border-color: var(--light-theme-color);
+	}
+}
+
+@media (max-width: 650px) {
+	#passed_time {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 20px;
+		border-radius: 2px;
+	}
+}

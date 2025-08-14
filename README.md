@@ -1,2 +1,5 @@
 # date
-Mini-project in which i'm trying realise count time which how long site created.
+
+Это мой небольшой проект, который отображает время с момента его создания, так же с недавнего времени добавлена информация о моём последнем коммите на github.
+
+Проект написан на чистом HTML/CSS/JS.
