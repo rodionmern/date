@@ -48,7 +48,7 @@ let passed_time_h2 = document.querySelector('#passed_time');
 passed_time_h2.innerHTML = result;
 
 const get_data = async () => {
-	const response = await fetch(`https://api.github.com/users/rodionmern/events/public?_=$}Date.now}`)
+	const response = await fetch(`https://api.github.com/users/rodionmern/events/public?_=${Date.now}`)
 		.then((response) => {return response})
 		.catch((error) => console.log(error))
 	const data = response.json()
