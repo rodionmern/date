@@ -48,7 +48,7 @@ let passed_time_h2 = document.querySelector('#passed_time');
 passed_time_h2.innerHTML = result;
 
 const get_data = async () => {
-	const response = await fetch('https://api.github.com/users/rodionmern/events/public')
+	const response = await fetch(`https://api.github.com/users/rodionmern/events/public?_=$}Date.now}`)
 		.then((response) => {return response})
 		.catch((error) => console.log(error))
 	const data = response.json()
@@ -60,17 +60,22 @@ const response = await get_data()
 	.then((res) => {return res})
 	.catch((err) => console.log(err))
 
-let commit_message = response[0].payload.commits[0].message.split('\n')
-let result_message_commit = ''
-
-commit_message.map((line, index, arr) => (
-	arr[index] !== arr[-1] ? result_message_commit+=`${line}<br>` : result_message_commit+=line
-))
-
-let commit_splited_url = response[0].payload.commits[0].url.split('/')
-
 let commit_information_h3 = document.querySelector('#commit_info');
-commit_information_h3.innerHTML = `
-	Мой последний коммит:<br><br>
-	<a href="https://github.com/${commit_splited_url[4]}/${commit_splited_url[5]}/commit/${commit_splited_url[7]}">${result_message_commit}</a><br>
-	 в <a href="https://github.com/${commit_splited_url[4]}/${commit_splited_url[5]}">${commit_splited_url[4]}/${commit_splited_url[5]}</a>`;
+
+if (response[0].type == 'PushEvent') {
+	let commit_message = response[0].payload.commits[0].message.split('\n')
+	let result_message_commit = ''
+
+	commit_message.map((line, index, arr) => (
+		arr[index] !== arr[-1] ? result_message_commit+=`${line}<br>` : result_message_commit+=line
+	))
+
+	let commit_splited_url = response[0].payload.commits[0].url.split('/')
+
+	commit_information_h3.innerHTML = `
+		Мой последний коммит:<br><br>
+		<a href="https://github.com/${commit_splited_url[4]}/${commit_splited_url[5]}/commit/${commit_splited_url[7]}">${result_message_commit}</a><br>
+		в <a href="https://github.com/${commit_splited_url[4]}/${commit_splited_url[5]}">${commit_splited_url[4]}/${commit_splited_url[5]}</a>`;
+} else {
+	commit_information_h3.innerHTML = `Последнее событие не связано с коммитами. - ${response[0].type}`
+}
