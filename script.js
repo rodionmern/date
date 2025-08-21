@@ -1,3 +1,13 @@
+document.querySelector('.content').innerHTML =
+		`	
+			<p>Прошло времени с создания этого сайта:</p>
+			<h2 id="passed_time"></h2>
+			<hr>
+			<div class="commit_block">
+				<h3 id="commit_info"></h3>
+			</div>
+		`
+
 const initial_date = new Date(2023, 10, 12).getTime()
 const now_date = new Date().getTime()
 
