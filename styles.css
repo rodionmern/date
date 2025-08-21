@@ -47,6 +47,10 @@ hr {
 	width: max-content;
 }
 
+.content:empty {
+	display: none;
+}
+
 #passed_time {
 	display: flex;
 	justify-content: center;
