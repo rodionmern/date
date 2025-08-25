@@ -94,7 +94,7 @@ if (response[0].type == 'PushEvent') {
 
 	// Обрабатываем разделённые строки, если находится /n, то в конце строки прибавляется тег <br>, если не находится просто возращается строка.
 	commit_message.map((line, index, arr) => (
-		arr[index] !== arr[-1] ? result_message_commit+=`${line}<br>` : result_message_commit+=line
+		arr[index] !== arr[-1] ? result_commit_message+=`${line}<br>` : result_commit_message+=line
 	))
 
 	// Инициализируем ссылку из запроса, и разделяем её, для удобства составления других ссылок.
@@ -102,7 +102,7 @@ if (response[0].type == 'PushEvent') {
 
 	// Вставляем всё что получили в вёрстку.
 	commit_information_h3.innerHTML = `
-		Мой последний коммит:<br><br>
+		Мой последний коммит/пул-реквест/деплой:<br><br>
 		<a href="https://github.com/${commit_splited_url[4]}/${commit_splited_url[5]}/commit/${commit_splited_url[7]}">${result_commit_message}</a><br>
 		в <a href="https://github.com/${commit_splited_url[4]}/${commit_splited_url[5]}">${commit_splited_url[4]}/${commit_splited_url[5]}</a>`;
 } else {
