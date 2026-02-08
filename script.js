@@ -1,12 +1,21 @@
+//
+// Высчитывалка времени
+//
+
 // Задаём разметку для div'а.
 document.querySelector('.content').innerHTML =
 	`	
 		<p>Прошло времени с создания этого сайта:</p>
 		<h2 id="passed_time"></h2>
 		<hr>
+		<div class="nerd_block">
+		</div>
+		<button>+</button>
+		<hr>
 		<div class="commit_block">
 			<h3 id="commit_info"></h3>
 		</div>
+
 	`
 
 // Указываем дату создания сайта и нынешнюю.
@@ -65,6 +74,49 @@ const result = get_date_difference(now_date, initial_date)
 
 // Вставляем результат в разметку.
 document.querySelector('#passed_time').innerHTML = result;
+
+//
+// Nerd-блок
+//
+
+// Задаём селектор для нёрд-блока и сразу выставляем статус
+var nerd_block = document.querySelector('.nerd_block');
+nerd_block.innerHTML = "Загрузка..."
+
+// Отправляем get-запрос на jsonbin 
+const res = await fetch('https://api.jsonbin.io/v3/b/6988ea6eae596e708f1b11e4', {
+	method: "GET",
+	headers: {
+		"X-Access-Key": "$2a$10$cePzaqK901otAz/hMGUwoud45khTSnrDHEdlE5qKalb6JQ74tM5m2"
+	}
+})
+
+// Парсим запрос
+let parsedRes = await res.json()
+
+// Цикл отвечает за хайп, ой в целом за то чтобы посчитать полное время и установить за текущий день
+for (let i = 0; i < parsedRes.record.days.length; i++) {
+	if (i == 0) {
+		var all = 0
+		all += parseInt(parsedRes.record.days[i].time)
+	} else {
+		all += parseInt(parsedRes.record.days[i].time)
+	}
+	// Задаём разметку если элемент - последний
+	if (i == parsedRes.record.days.length-1) {
+		nerd_block.innerHTML = 
+			`
+				<h3>Подготовка к экзаменам за сегодня:</h3>
+				<br>Предметы - <strong>${parsedRes.record.days[i].subject}</strong>;
+				 время - <strong>${parsedRes.record.days[i].time}</strong>мин
+				<br><br><h2>Всего: ${Math.floor(parseInt(all)/60)}ч, ${all%60}м</h2>
+			`
+	}
+}
+
+//
+// Github-блок
+//
 
 const get_data = async () => {
 	// Запрашиваем дату с api github'а, и потом сохраняем её в переменную data.
