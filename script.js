@@ -106,7 +106,7 @@ for (let i = 0; i < parsedRes.record.days.length; i++) {
 	if (i == parsedRes.record.days.length-1) {
 		nerd_block.innerHTML = 
 			`
-				<h3>Подготовка к экзаменам за сегодня:</h3>
+				<h3>Подготовка к экзаменам за ${parsedRes.record.days[i].date}:</h3>
 				<br>Предметы - <strong>${parsedRes.record.days[i].subject}</strong>;
 				 время - <strong>${parsedRes.record.days[i].time}</strong>мин
 				<br><br><h2>Всего: ${Math.floor(parseInt(all)/60)}ч, ${all%60}м</h2>
@@ -134,29 +134,21 @@ const response = await get_data()
 	.then((res) => {return res})
 	.catch((err) => console.log(err))
 
+console.log(response)
+
 let commit_information_h3 = document.querySelector('#commit_info');
 
 // Проверяем тип запроса последнего действия аккаунта, если он равен == "PushEvent", то отдаём информацию о последнем коммите, если нет,
 // то отдаём информацию о том какого типа последнее действие.
 if (response[0].type == 'PushEvent') {
-	// Разделяем текст коммита, чтобы многострочные коммиты позже можно было отображать нормально, а не одной строкой.
-	let commit_message = response[0].payload.commits[0].message.split('\n')
-	// Создаём вспомогательную переменную.
-	let result_commit_message = ''
-
-	// Обрабатываем разделённые строки, если находится /n, то в конце строки прибавляется тег <br>, если не находится просто возращается строка.
-	commit_message.map((line, index, arr) => (
-		arr[index] !== arr[-1] ? result_commit_message+=`${line}<br>` : result_commit_message+=line
-	))
-
 	// Инициализируем ссылку из запроса, и разделяем её, для удобства составления других ссылок.
-	let commit_splited_url = response[0].payload.commits[0].url.split('/')
+	let commit_splited_url = response[0].repo.url.split('/')
+	let commit_created_at = response[0].created_at
 
 	// Вставляем всё что получили в вёрстку.
 	commit_information_h3.innerHTML = `
-		Мой последний коммит/пул-реквест/деплой:<br><br>
-		<a href="https://github.com/${commit_splited_url[4]}/${commit_splited_url[5]}/commit/${commit_splited_url[7]}">${result_commit_message}</a><br>
-		в <a href="https://github.com/${commit_splited_url[4]}/${commit_splited_url[5]}">${commit_splited_url[4]}/${commit_splited_url[5]}</a>`;
+		Последний коммит/пул-реквест/деплой<br><br>
+		был ${new Date(commit_created_at).getDate()}.${new Date(commit_created_at).getMonth()+1}.${new Date(commit_created_at).getFullYear()} в <a href="https://github.com/${commit_splited_url[4]}/${commit_splited_url[5]}">${commit_splited_url[4]}/${commit_splited_url[5]}</a>`;
 } else {
 	// Отдаём в вёрстку информацию о том что последнее событие не связано с коммитами.
 	commit_information_h3.innerHTML = `Последнее событие не связано с коммитами. - ${response[0].type}`

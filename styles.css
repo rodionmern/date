@@ -21,6 +21,23 @@ body {
 	height: max-content;
 }
 
+button {
+	color: var(--dark-theme-color);
+	background-color: transparent;
+	border: 1px double var(--dark-theme-color);
+	padding: 2.5px 10px;
+	margin: 15px 0 0 0;
+	cursor: pointer;
+	transition: 1s;
+}
+
+button:hover {
+	color: var(--light-theme-color);
+	background-color: var(--light-theme-background-color);
+	border: 1px double var(--light-theme-color);
+	transition: 1s;
+}
+
 a {
 	color: #c1dfdf;
 	text-decoration: none;
