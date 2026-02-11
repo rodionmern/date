@@ -1,3 +1,8 @@
+import updateBackground from "./funcs/backgroundUpdate.js"
+
+// Устанавливаем фон
+updateBackground()
+
 //
 // Высчитывалка времени
 //
@@ -10,12 +15,10 @@ document.querySelector('.content').innerHTML =
 		<hr>
 		<div class="nerd_block">
 		</div>
-		<button>+</button>
 		<hr>
 		<div class="commit_block">
 			<h3 id="commit_info"></h3>
 		</div>
-
 	`
 
 // Указываем дату создания сайта и нынешнюю.
@@ -102,9 +105,10 @@ for (let i = 0; i < parsedRes.record.days.length; i++) {
 	} else {
 		all += parseInt(parsedRes.record.days[i].time)
 	}
+	console.log(parsedRes.record.days.length-1)
 	// Задаём разметку если элемент - последний
 	if (i == parsedRes.record.days.length-1) {
-		nerd_block.innerHTML = 
+		document.querySelector('.nerd_block').innerHTML = 
 			`
 				<h3>Подготовка к экзаменам за ${parsedRes.record.days[i].date}:</h3>
 				<br>Предметы - <strong>${parsedRes.record.days[i].subject}</strong>;
@@ -113,6 +117,8 @@ for (let i = 0; i < parsedRes.record.days.length; i++) {
 			`
 	}
 }
+
+console.log(all)
 
 //
 // Github-блок

@@ -1,5 +1,23 @@
-let button = document.querySelector("button");
-button.addEventListener('click', async () => {
+import updateBackground from "./funcs/backgroundUpdate.js"
+
+// Вставляем "админку", если в локалсторейже есть мастер-ключик
+if (localStorage.getItem('key') !== null) {
+    document.querySelector('.content').innerHTML += 
+        `
+            <hr>
+            <div class="admin-block">
+                <h2>админ-функшнс</h2>
+                <div class="admin-btns">
+                    <button class="nerd-btn">Добавить запись</button>
+                    <button class="bg-btn">Поменять фон</button>
+                </div>
+            </div>
+        `
+}
+
+
+let nerdBtn = document.querySelector(".nerd-btn");
+nerdBtn.addEventListener('click', async () => {
     // Получаем старые данные
     const oldData = await fetch('https://api.jsonbin.io/v3/b/6988ea6eae596e708f1b11e4', {
         method: "GET",
@@ -38,4 +56,23 @@ button.addEventListener('click', async () => {
         },
         body: JSON.stringify({days: oldDataMassive})
     })
+})
+
+let backgroundBtn = document.querySelector(".bg-btn");
+backgroundBtn.addEventListener('click', async () => {
+    // Промптим ссылку на картинку
+    let bgLink = prompt("ссылочку на фотокарточку?")
+
+    // Отправляем put-запрос на jsonbin 
+    const res = await fetch('https://api.jsonbin.io/v3/b/698c41f943b1c97be9763425', {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Master-Key': localStorage.getItem('key')
+        },
+        body: JSON.stringify({link: bgLink})
+    })
+    
+    // Обновляем фон
+    updateBackground()
 })
