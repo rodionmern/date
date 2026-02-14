@@ -77,12 +77,12 @@ hr {
 	padding: 20px;
 	width: max-content;
 	opacity: 0;
-	transition: 5s;
-	animation: fadeInImage 5s ease-in forwards;
+	transition: 1s;
+	animation: fadeInContent 5s ease-in forwards;
   	animation-delay: 1.5s; /* буду надеяться что у всех за секунду примерно успеется словиться картинка */
 }
 
-@keyframes fadeInImage {
+@keyframes fadeInContent {
 	from {
 	  opacity: 0;
 	}
@@ -156,5 +156,11 @@ hr {
 		align-items: center;
 		font-size: 20px;
 		border-radius: 2px;
+	}
+}
+
+@media (max-width: 450px) {
+	.content {
+		padding: 15px;
 	}
 }
